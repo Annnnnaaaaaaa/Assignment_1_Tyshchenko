@@ -1,0 +1,14 @@
+C:\0_KSE\2 терм\алгоритми\Assignment 1_Tyshchenko\Assignment 1_Tyshchenko\bin\Debug\net10.0\Assignment 1_Tyshchenko.exe
+C:\0_KSE\2 терм\алгоритми\Assignment 1_Tyshchenko\Assignment 1_Tyshchenko\bin\Debug\net10.0\Assignment 1_Tyshchenko.deps.json
+C:\0_KSE\2 терм\алгоритми\Assignment 1_Tyshchenko\Assignment 1_Tyshchenko\bin\Debug\net10.0\Assignment 1_Tyshchenko.runtimeconfig.json
+C:\0_KSE\2 терм\алгоритми\Assignment 1_Tyshchenko\Assignment 1_Tyshchenko\bin\Debug\net10.0\Assignment 1_Tyshchenko.dll
+C:\0_KSE\2 терм\алгоритми\Assignment 1_Tyshchenko\Assignment 1_Tyshchenko\bin\Debug\net10.0\Assignment 1_Tyshchenko.pdb
+C:\0_KSE\2 терм\алгоритми\Assignment 1_Tyshchenko\Assignment 1_Tyshchenko\obj\Debug\net10.0\Assignment 1_Tyshchenko.GeneratedMSBuildEditorConfig.editorconfig
+C:\0_KSE\2 терм\алгоритми\Assignment 1_Tyshchenko\Assignment 1_Tyshchenko\obj\Debug\net10.0\Assignment 1_Tyshchenko.AssemblyInfoInputs.cache
+C:\0_KSE\2 терм\алгоритми\Assignment 1_Tyshchenko\Assignment 1_Tyshchenko\obj\Debug\net10.0\Assignment 1_Tyshchenko.AssemblyInfo.cs
+C:\0_KSE\2 терм\алгоритми\Assignment 1_Tyshchenko\Assignment 1_Tyshchenko\obj\Debug\net10.0\Assignment 1_Tyshchenko.csproj.CoreCompileInputs.cache
+C:\0_KSE\2 терм\алгоритми\Assignment 1_Tyshchenko\Assignment 1_Tyshchenko\obj\Debug\net10.0\Assignment 1_Tyshchenko.dll
+C:\0_KSE\2 терм\алгоритми\Assignment 1_Tyshchenko\Assignment 1_Tyshchenko\obj\Debug\net10.0\refint\Assignment 1_Tyshchenko.dll
+C:\0_KSE\2 терм\алгоритми\Assignment 1_Tyshchenko\Assignment 1_Tyshchenko\obj\Debug\net10.0\Assignment 1_Tyshchenko.pdb
+C:\0_KSE\2 терм\алгоритми\Assignment 1_Tyshchenko\Assignment 1_Tyshchenko\obj\Debug\net10.0\Assignment 1_Tyshchenko.genruntimeconfig.cache
+C:\0_KSE\2 терм\алгоритми\Assignment 1_Tyshchenko\Assignment 1_Tyshchenko\obj\Debug\net10.0\ref\Assignment 1_Tyshchenko.dll
