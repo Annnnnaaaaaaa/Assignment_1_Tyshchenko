@@ -2,11 +2,12 @@
 
 public class Program
 {
+    // SHUNTING YARD
     static bool IsNumber(char ch) => char.IsDigit(ch) || ch == '.';
 
     static bool IsOperator(char ch) => ch == '+' || ch == '-' || ch == '/' || ch == '*' || ch == '^';
 
-    static int OpPreced(char ch)
+    static int OperatorsPriority(char ch)
     {
         return ch switch
         {
@@ -20,26 +21,33 @@ public class Program
     static string ShuntingYard(string input)
     {
         Stack stack = new Stack();
-        string output = "";
+        string res = "";
 
         for (int i = 0; i < input.Length; i++)
         {
             char c = input[i];
 
-            if (c == ' ') continue;
+            if (c == ' ')
+            {
+                continue;
+            }
 
-            if (IsNumber(c) || (c == '-' && (i == 0 || input[i - 1] == '(')))
+            if (IsNumber(c) || (c == '-' && i == 0) || (c == '-' && input[i - 1] == '('))
             {
                 string number = "";
-                if (c == '-') { number += c; i++; }
+                if (c == '-')
+                {
+                    number += c; 
+                    i++; 
+                }
 
                 while (i < input.Length && IsNumber(input[i]))
                 {
                     number += input[i];
                     i++;
                 }
-                i--;
-                output += number + ' ';
+                i--; // щоб не пропустити наступні символи
+                res += number + " ";
             }
             else if (c == '(')
             {
@@ -48,53 +56,51 @@ public class Program
             else if (c == ')')
             {
                 while (!stack.IsEmpty() && stack.Peek() != "(")
-                    output += stack.Pop() + ' ';
+                    res += stack.Pop() + ' ';
 
                 if (stack.IsEmpty())
-                    throw new Exception("Незбалансовані дужки");
+                    throw new Exception("Not open brackets");
 
                 stack.Pop();
             }
             else if (IsOperator(c))
             {
-                while (!stack.IsEmpty() && OpPreced(stack.Peek()[0]) >= OpPreced(c))
-                    output += stack.Pop() + ' ';
+                while (!stack.IsEmpty() && OperatorsPriority(stack.Peek()[0]) >= OperatorsPriority(c))
+                    res += stack.Pop() + ' ';
 
                 stack.Push(c.ToString());
             }
             else
             {
-                throw new Exception($"Невідомий символ: {c}");
+                throw new Exception($"Unrecognizable symbol: {c}");
             }
         }
 
         while (!stack.IsEmpty())
         {
             string top = stack.Pop();
-            if (top == "(") throw new Exception("Незбалансовані дужки");
-            output += top + ' ';
+            if (top == "(") throw new Exception("Not closed brackets");
+            res += top + " ";
         }
 
-        return output.Trim();
+        return res.Trim();
     }
 
-    static int EvaluatePostfixNotation(string rpn)
+    
+    // EVALUATE POSTFIX
+    static int EvaluatePostfixNotation(string postfix)
     {
         Stack stack = new Stack();
-        string[] tokens = rpn.Split(' ');
+        string[] tokens = postfix.Split(' ');
 
         foreach (string token in tokens)
         {
             if (token == "") continue;
 
-            if (int.TryParse(token, out int number))
+            if (token.Length == 1 && IsOperator(token[0]))
             {
-                stack.Push(token);
-            }
-            else if (token.Length == 1 && IsOperator(token[0]))
-            {
-                int b = int.Parse(stack.Pop());
-                int a = int.Parse(stack.Pop());
+                int b = Convert.ToInt32(stack.Pop());
+                int a = Convert.ToInt32(stack.Pop());
 
                 int result = token[0] switch
                 {
@@ -103,14 +109,18 @@ public class Program
                     '*' => a * b,
                     '/' => a / b,
                     '^' => (int)Math.Pow(a, b),
-                    _ => throw new Exception($"Невідомий оператор: {token}")
+                    _ => throw new Exception($"Unknown operator: {token}")
                 };
 
                 stack.Push(result.ToString());
             }
+            else
+            {
+                stack.Push(token);
+            }
         }
 
-        return int.Parse(stack.Pop());
+        return Convert.ToInt32(stack.Pop());
     }
 
     
@@ -118,13 +128,12 @@ public class Program
     {
         string input = "1+  3*(  2+ 4)";
 
-        Console.WriteLine($"Вираз:     {input}");
+        Console.WriteLine($"Input: {input}");
 
         string rpn = ShuntingYard(input);
-        Console.WriteLine($"RPN:       {rpn}");
+        Console.WriteLine($"In postfix notation: {rpn}");
 
         int result = EvaluatePostfixNotation(rpn);
-        Console.WriteLine($"Результат: {result}");
-        // → 1 + 3*(2+4) = 1 + 18 = 19
+        Console.WriteLine($"Result: {result}");
     }
 }

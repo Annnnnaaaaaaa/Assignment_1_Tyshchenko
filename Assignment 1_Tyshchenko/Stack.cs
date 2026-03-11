@@ -7,6 +7,7 @@ public class Stack
     private int _pointer;
 
     public int Count => _pointer;
+    
     public bool IsEmpty() => _pointer == 0;
 
     public void Push(string value)
