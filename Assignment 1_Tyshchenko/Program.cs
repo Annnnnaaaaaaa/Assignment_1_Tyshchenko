@@ -2,64 +2,129 @@
 
 public class Program
 {
-    static void Main()
+    static bool IsNumber(char ch) => char.IsDigit(ch) || ch == '.';
+
+    static bool IsOperator(char ch) => ch == '+' || ch == '-' || ch == '/' || ch == '*' || ch == '^';
+
+    static int OpPreced(char ch)
     {
-        string numbers = ""; // буфер для цифр
-        var[] postfix = new var[100];
-        int res = 0;
-        Stack myStack = new Stack();
-
-        string sm_string = "1+  3*(  2+ 4)";
-
-        for (int i = 0; i < sm_string.Length; i++)
+        return ch switch
         {
-            if (sm_string[i] is int)
+            '^' => 3,
+            '*' or '/' => 2,
+            '+' or '-' => 1,
+            _ => 0
+        };
+    }
+
+    static string ShuntingYard(string input)
+    {
+        Stack stack = new Stack();
+        string output = "";
+
+        for (int i = 0; i < input.Length; i++)
+        {
+            char c = input[i];
+
+            if (c == ' ') continue;
+
+            if (IsNumber(c) || (c == '-' && (i == 0 || input[i - 1] == '(')))
             {
-                numbers += sm_string[i];
-                
-                if (i == sm_string.Length - 1 || sm_string[i] is not int)
+                string number = "";
+                if (c == '-') { number += c; i++; }
+
+                while (i < input.Length && IsNumber(input[i]))
                 {
+                    number += input[i];
                     i++;
-                    postfix.Add(numbers);
-                    numbers = "";
                 }
+                i--;
+                output += number + ' ';
+            }
+            else if (c == '(')
+            {
+                stack.Push(c.ToString());
+            }
+            else if (c == ')')
+            {
+                while (!stack.IsEmpty() && stack.Peek() != "(")
+                    output += stack.Pop() + ' ';
+
+                if (stack.IsEmpty())
+                    throw new Exception("Незбалансовані дужки");
+
+                stack.Pop();
+            }
+            else if (IsOperator(c))
+            {
+                while (!stack.IsEmpty() && OpPreced(stack.Peek()[0]) >= OpPreced(c))
+                    output += stack.Pop() + ' ';
+
+                stack.Push(c.ToString());
             }
             else
             {
-                myStack.Pull(sm_string[i]);
+                throw new Exception($"Невідомий символ: {c}");
             }
         }
-        
-        for (int i = 0; i<postfix.Length; i++)
+
+        while (!stack.IsEmpty())
         {
-            if (postfix[i] is not int)
+            string top = stack.Pop();
+            if (top == "(") throw new Exception("Незбалансовані дужки");
+            output += top + ' ';
+        }
+
+        return output.Trim();
+    }
+
+    static int EvaluatePostfixNotation(string rpn)
+    {
+        Stack stack = new Stack();
+        string[] tokens = rpn.Split(' ');
+
+        foreach (string token in tokens)
+        {
+            if (token == "") continue;
+
+            if (int.TryParse(token, out int number))
             {
-                
+                stack.Push(token);
+            }
+            else if (token.Length == 1 && IsOperator(token[0]))
+            {
+                int b = int.Parse(stack.Pop());
+                int a = int.Parse(stack.Pop());
+
+                int result = token[0] switch
+                {
+                    '+' => a + b,
+                    '-' => a - b,
+                    '*' => a * b,
+                    '/' => a / b,
+                    '^' => (int)Math.Pow(a, b),
+                    _ => throw new Exception($"Невідомий оператор: {token}")
+                };
+
+                stack.Push(result.ToString());
             }
         }
-        
-        
-        
-        // // 1. Створення об'єкта класу Stack
-        // Stack myStack = new Stack();
-        //
-        // // 2. Додавання елементів (Push)
-        // myStack.Push("Перший");
-        // myStack.Push("Другий");
-        // myStack.Push("Третій");
-        //
-        // // 3. Вилучення елементів (Pull)
-        // // Оскільки це стек (LIFO), "Третій" вийде першим
-        // string item1 = myStack.Pull(); 
-        // Console.WriteLine(item1); // Виведе: Третій
-        //
-        // string item2 = myStack.Pull();
-        // Console.WriteLine(item2); // Виведе: Другий
-        //
-        // // 4. Демонстрація порожнього стека
-        // myStack.Pull(); // Витягли "Перший"
-        // var empty = myStack.Pull(); // Тут поверне null, як прописано в логіці
+
+        return int.Parse(stack.Pop());
+    }
+
+    
+    static void Main()
+    {
+        string input = "1+  3*(  2+ 4)";
+
+        Console.WriteLine($"Вираз:     {input}");
+
+        string rpn = ShuntingYard(input);
+        Console.WriteLine($"RPN:       {rpn}");
+
+        int result = EvaluatePostfixNotation(rpn);
+        Console.WriteLine($"Результат: {result}");
+        // → 1 + 3*(2+4) = 1 + 18 = 19
     }
 }
-    
-    
