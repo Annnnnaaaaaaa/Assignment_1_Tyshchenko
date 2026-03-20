@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Assignment 1_Tyshchenko")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+10592df5de0295c786e932621a71fd160abfc06a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f765f5bd14bb4ed146b49c1641c2531b6b82af0f")]
 [assembly: System.Reflection.AssemblyProductAttribute("Assignment 1_Tyshchenko")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Assignment 1_Tyshchenko")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

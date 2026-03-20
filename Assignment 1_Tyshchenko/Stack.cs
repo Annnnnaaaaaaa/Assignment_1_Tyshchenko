@@ -1,6 +1,6 @@
 ﻿namespace Assignment_1_Tyshchenko;
 
-public class Stack
+public class MyStack
 {
     private const int Capacity = 50;
     private string[] _array = new string[Capacity];
